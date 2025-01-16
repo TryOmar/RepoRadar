@@ -1,6 +1,6 @@
 # RepoRadar
 
-[![Demo Video](https://img.shields.io/badge/Demo-Video-blue)](https://omar7001-b.github.io/RepoRadar/)
+[![Demo Preview](https://img.shields.io/badge/Demo-Preview-blue)](https://omar7001-b.github.io/RepoRadar/)
 
 ## Introduction
 
@@ -35,5 +35,4 @@ Watch the [demo video](https://omar7001-b.github.io/RepoRadar/).
 
 For questions, contact:
 
-- Email: your.email@example.com
 - GitHub: [Omar7001-B](https://github.com/Omar7001-B) 
