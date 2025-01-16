@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoRadar - Analyze Your GitHub Repositories</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>RepoRadar <button id="themeToggle" class="theme-toggle">🌙</button></h1>
+        <p class="description">RepoRadar brings all your GitHub repositories in one place, allowing you to analyze your
+            skills and languages used across projects.</p>
+        <input type="text" id="username" placeholder="Enter GitHub Username">
+        <button id="fetchButton">Fetch Repositories</button>
+        <div id="results"></div>
+        <div id="error-message" class="error-message"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
