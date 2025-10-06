@@ -4,20 +4,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RepoRadar - Analyze Your GitHub Repositories</title>
+    <title>RepoRadar - Professional GitHub Repository Analyzer</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-    <div class="container">
-        <h1>RepoRadar <button id="themeToggle" class="theme-toggle">🌙</button></h1>
-        <p class="description">RepoRadar brings all your GitHub repositories in one place, allowing you to analyze your
-            skills and languages used across projects.</p>
-        <input type="text" id="username" placeholder="Enter GitHub Username">
-        <button id="fetchButton">Fetch Repositories</button>
-        <div id="results"></div>
-        <div id="error-message" class="error-message"></div>
+    <div class="app-container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-radar"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>RepoRadar</h1>
+                        <p>Professional GitHub Repository Analyzer</p>
+                    </div>
+                </div>
+                <button id="themeToggle" class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="search-section">
+                <div class="search-container">
+                    <div class="search-input-group">
+                        <i class="fas fa-user search-icon"></i>
+                        <input type="text" id="username" placeholder="Enter GitHub username..." class="search-input">
+                        <button id="fetchButton" class="search-button">
+                            <i class="fas fa-search"></i>
+                            <span>Analyze Repositories</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="error-message" class="error-message"></div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results" class="results-container"></div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 RepoRadar. Professional GitHub repository analysis tool.</p>
+        </footer>
     </div>
+
     <script src="script.js"></script>
 </body>
 
