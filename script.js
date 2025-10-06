@@ -10,8 +10,8 @@ document.getElementById("themeToggle").addEventListener("click", function () {
 // Main Repository Fetching Functionality
 document.getElementById("fetchButton").addEventListener("click", function () {
     const username = document.getElementById("username").value.trim();
-    const errorMessageDiv = document.getElementById("error-message");
-    const resultsDiv = document.getElementById("results");
+  const errorMessageDiv = document.getElementById("error-message");
+        const resultsDiv = document.getElementById("results");
     const button = this;
     const buttonText = button.querySelector('span');
     const buttonIcon = button.querySelector('i');
@@ -19,7 +19,7 @@ document.getElementById("fetchButton").addEventListener("click", function () {
     // Clear previous error messages and results
     errorMessageDiv.textContent = "";
     errorMessageDiv.classList.remove("show");
-    resultsDiv.innerHTML = "";
+        resultsDiv.innerHTML = "";
     
     if (!username) {
         showError("Please enter a GitHub username.");
@@ -56,10 +56,10 @@ document.getElementById("fetchButton").addEventListener("click", function () {
                 ...repo,
                 languages: null // Will be fetched separately
             }));
-            
-            // Fetch languages for each repository
+
+          // Fetch languages for each repository
             const languagePromises = repositories.map(repo => 
-                fetch(repo.languages_url)
+          fetch(repo.languages_url)
                     .then(response => response.json())
                     .then(languages => {
                         repo.languages = languages;
@@ -251,6 +251,73 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add smooth scrolling
     document.documentElement.style.scrollBehavior = 'smooth';
     
+    // Mobile-specific improvements
+    if (window.innerWidth <= 768) {
+        // Prevent zoom on input focus (iOS)
+        const searchInput = document.getElementById('username');
+        searchInput.addEventListener('focus', function() {
+            if (window.innerWidth <= 768) {
+                document.querySelector('meta[name="viewport"]').setAttribute('content', 
+                    'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+            }
+        });
+        
+        searchInput.addEventListener('blur', function() {
+            document.querySelector('meta[name="viewport"]').setAttribute('content', 
+                'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+        });
+    }
+    
+    // Touch-friendly interactions
+    let touchStartY = 0;
+    let touchEndY = 0;
+    
+    document.addEventListener('touchstart', function(e) {
+        touchStartY = e.changedTouches[0].screenY;
+    });
+    
+    document.addEventListener('touchend', function(e) {
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipe();
+    });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartY - touchEndY;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+            // Add haptic feedback if available
+            if (navigator.vibrate) {
+                navigator.vibrate(10);
+            }
+        }
+    }
+    
+    // Optimize for mobile performance
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        });
+        
+        // Observe repo cards when they're added
+        const resultsContainer = document.getElementById('results');
+        const mutationObserver = new MutationObserver((mutations) => {
+            mutations.forEach(mutation => {
+                mutation.addedNodes.forEach(node => {
+                    if (node.nodeType === 1 && node.classList.contains('repo-card')) {
+                        observer.observe(node);
+                    }
+                });
+            });
+        });
+        
+        mutationObserver.observe(resultsContainer, { childList: true });
+    }
+    
     // Add loading animation for better UX
     const style = document.createElement('style');
     style.textContent = `
@@ -258,6 +325,7 @@ document.addEventListener('DOMContentLoaded', function() {
             animation: fadeInUp 0.6s ease forwards;
             opacity: 0;
             transform: translateY(20px);
+            animation-play-state: paused;
         }
         
         @keyframes fadeInUp {
@@ -272,6 +340,36 @@ document.addEventListener('DOMContentLoaded', function() {
         .repo-card:nth-child(3) { animation-delay: 0.3s; }
         .repo-card:nth-child(4) { animation-delay: 0.4s; }
         .repo-card:nth-child(5) { animation-delay: 0.5s; }
+        
+        /* Mobile-specific animations */
+        @media (max-width: 768px) {
+            .repo-card {
+                animation-duration: 0.4s;
+            }
+            
+            .search-container {
+                animation: slideInDown 0.3s ease;
+            }
+            
+            @keyframes slideInDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+        
+        /* Reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            .repo-card,
+            .search-container {
+                animation: none;
+            }
+        }
     `;
     document.head.appendChild(style);
 });
